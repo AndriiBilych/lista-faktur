@@ -1,0 +1,82 @@
+[
+  {
+    "id": 0,
+    "number": 12345677819,
+    "title": "bank transfer",
+    "comment": "transfer to a friend",
+    "netto": 1456.5,
+    "vat": 2,
+    "order": 1,
+    "date": "2020-10-08"
+  },
+  {
+    "id": 1,
+    "number": 13345677819,
+    "title": "Szkołą",
+    "comment": "Studia dzienne nr studenta 12567",
+    "netto": 256.5,
+    "vat": 15,
+    "order": 2,
+    "date": "2020-11-09"
+  },
+  {
+    "id": 2,
+    "number": 12345543319,
+    "title": "Szkoła",
+    "comment": "Studia dzienne nr studenta 68754",
+    "netto": 356.5,
+    "vat": 15,
+    "order": 4,
+    "date": "2021-11-08"
+  },
+  {
+    "id": 3,
+    "number": 12345564819,
+    "title": "Steam purchase",
+    "comment": "Game purchase",
+    "netto": 159.99,
+    "vat": 10,
+    "order": 5,
+    "date": "2020-10-08"
+  },
+  {
+    "id": 4,
+    "number": 12345677819,
+    "title": "Netflix subscription",
+    "comment": "July2021",
+    "netto": 80,
+    "vat": 15,
+    "order": 3,
+    "date": "2021-07-10"
+  },
+  {
+    "id": 5,
+    "number": 12345676719,
+    "title": "Language courses",
+    "comment": "November",
+    "netto": 300,
+    "vat": 23,
+    "order": 7,
+    "date": "2021-11-01"
+  },
+  {
+    "id": 6,
+    "number": 12345677819,
+    "title": "Language courses",
+    "comment": "October",
+    "netto": 300,
+    "vat": 23,
+    "order": 6,
+    "date": "2021-10-01"
+  },
+  {
+    "id": 7,
+    "number": 12345677678,
+    "title": "Language courses",
+    "comment": "September",
+    "netto": 300,
+    "vat": 23,
+    "order": 8,
+    "date": "2021-09-01"
+  }
+]
