@@ -11,9 +11,8 @@ import {MatTable} from "@angular/material/table";
 })
 export class AppComponent implements OnInit {
   invoices: InvoiceModel[];
-  sortedInvoices: InvoiceModel[];
 
-  displayedColumns: string[] = ['id', 'date', 'contractor', 'title', 'comment', 'order', 'netto', 'vat'];
+  displayedColumns: string[] = [];
 
   @ViewChild('table') table: MatTable<InvoiceModel> | undefined;
 
@@ -21,39 +20,41 @@ export class AppComponent implements OnInit {
     private readonly dataService: DataService
   ) {
     this.invoices = [];
-    this.sortedInvoices = [];
+    this.displayedColumns = Object.keys(new InvoiceModel());
   }
 
   ngOnInit() {
     this.dataService.getInvoices().subscribe(data => {
       this.invoices = data;
-      this.sortedInvoices = this.invoices.slice();
     });
   }
 
   addData() {
     this.invoices.push(new InvoiceModel());
-    this.sortedInvoices.push(new InvoiceModel());
     this.table?.renderRows();
   }
 
   removeData() {
     this.invoices.pop();
-    this.sortedInvoices.pop();
+    this.table?.renderRows();
+  }
+
+  clearData() {
+    this.invoices = [];
     this.table?.renderRows();
   }
 
   sortData(sort: Sort) {
-    const data = this.invoices.slice();
+    const data = [...this.invoices];
     if (!sort.active || sort.direction === '') {
-      this.sortedInvoices = data;
       return;
     }
 
-    this.sortedInvoices = data.sort((a, b) => {
+    this.invoices = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'id': return compare(a.id, b.id, isAsc);
+        case 'contractor': return compare(a.contractor, b.contractor, isAsc);
         case 'title': return compare(a.title, b.title, isAsc);
         case 'comment': return compare(a.comment, b.comment, isAsc);
         case 'netto': return compare(a.netto, b.netto, isAsc);

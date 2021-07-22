@@ -8,5 +8,6 @@ table {
 }
 
 td, th {
-  width: 25%;
+  width: fit-content;
+  text-transform: capitalize;
 }
