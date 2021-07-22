@@ -1,7 +1,7 @@
 [
   {
     "id": 0,
-    "number": 12345677819,
+    "contractor": "Company Limited",
     "title": "bank transfer",
     "comment": "transfer to a friend",
     "netto": 1456.5,
@@ -11,7 +11,7 @@
   },
   {
     "id": 1,
-    "number": 13345677819,
+    "contractor":  "Monster Corporation s. p. z. o o.",
     "title": "Szkołą",
     "comment": "Studia dzienne nr studenta 12567",
     "netto": 256.5,
@@ -21,7 +21,7 @@
   },
   {
     "id": 2,
-    "number": 12345543319,
+    "contractor":  "Walter White",
     "title": "Szkoła",
     "comment": "Studia dzienne nr studenta 68754",
     "netto": 356.5,
@@ -31,7 +31,7 @@
   },
   {
     "id": 3,
-    "number": 12345564819,
+    "contractor":  "Walter White",
     "title": "Steam purchase",
     "comment": "Game purchase",
     "netto": 159.99,
@@ -41,7 +41,7 @@
   },
   {
     "id": 4,
-    "number": 12345677819,
+    "contractor":  "Company Limited",
     "title": "Netflix subscription",
     "comment": "July2021",
     "netto": 80,
@@ -51,7 +51,7 @@
   },
   {
     "id": 5,
-    "number": 12345676719,
+    "contractor":  "Monster Corporation s. p. z. o o.",
     "title": "Language courses",
     "comment": "November",
     "netto": 300,
@@ -61,7 +61,7 @@
   },
   {
     "id": 6,
-    "number": 12345677819,
+    "contractor":  "Company Limited",
     "title": "Language courses",
     "comment": "October",
     "netto": 300,
@@ -71,7 +71,7 @@
   },
   {
     "id": 7,
-    "number": 12345677678,
+    "contractor":  "Company Limited",
     "title": "Language courses",
     "comment": "September",
     "netto": 300,
