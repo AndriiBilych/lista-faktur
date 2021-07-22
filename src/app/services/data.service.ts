@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {InvoiceInterface} from "../Models/Interfaces/invoice.interface";
 import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
+import {InvoiceModel} from "../Models/invoice.model";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,9 @@ export class DataService {
 
   constructor(private readonly http: HttpClient) { }
 
-  getInvoices(): Observable<InvoiceInterface[]> {
-    return this.http.get<InvoiceInterface[]>(this.url);
+  getInvoices(): Observable<InvoiceModel[]> {
+    return this.http.get<InvoiceModel[]>(this.url).pipe(map((data) => {
+      return data.map((item) => new InvoiceModel().deserialize(item));
+    }));
   }
 }

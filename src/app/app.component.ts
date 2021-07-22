@@ -12,7 +12,10 @@ import {MatTable} from "@angular/material/table";
 export class AppComponent implements OnInit {
   invoices: InvoiceModel[];
 
-  displayedColumns: string[] = [];
+  headerColumns: string[] = []; // used for material table controls
+  dataColumns: string[] = []; // titles of columns with actual data
+
+  selected: InvoiceModel[];
 
   @ViewChild('table') table: MatTable<InvoiceModel> | undefined;
 
@@ -20,7 +23,10 @@ export class AppComponent implements OnInit {
     private readonly dataService: DataService
   ) {
     this.invoices = [];
-    this.displayedColumns = Object.keys(new InvoiceModel());
+    this.selected = [];
+    const filteredColumns = Object.keys(new InvoiceModel()).filter(item => item !== 'uid');
+    this.dataColumns = [...filteredColumns];
+    this.headerColumns = ['select', ...this.dataColumns];
   }
 
   ngOnInit() {
@@ -29,14 +35,46 @@ export class AppComponent implements OnInit {
     });
   }
 
+  toggle(event: any, row: InvoiceModel) {
+    if (event.checked) {
+      this.selected.push(row)
+    }
+    else {
+      const index = this.selected.findIndex(item => item.uid === row.uid)
+      this.selected.splice(index, 1);
+    }
+  }
+
+  containsByUid(uid: string) {
+    return !!this.selected.find(item => item.uid === uid);
+  }
+
+  masterToggle(event: any) {
+    event.checked ? this.selected = [...this.invoices] : this.selected = [];
+  }
+
   addData() {
     this.invoices.push(new InvoiceModel());
     this.table?.renderRows();
   }
 
   removeData() {
-    this.invoices.pop();
-    this.table?.renderRows();
+    if (this.selected.length === 0) {
+      this.invoices.pop();
+      this.table?.renderRows();
+    }
+    else if (this.selected.length === this.invoices.length) {
+      this.invoices = [];
+      this.selected = [];
+    }
+    else {
+      for (const select of this.selected) {
+        const index = this.invoices.findIndex(inv => inv.uid === select.uid)
+        this.invoices.splice(index, 1);
+      }
+      this.selected = [];
+      this.table?.renderRows()
+    }
   }
 
   clearData() {
