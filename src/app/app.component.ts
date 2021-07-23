@@ -45,6 +45,17 @@ export class AppComponent implements OnInit {
     }
   }
 
+  toggleRow(row: InvoiceModel) {
+    const index = this.selected.findIndex(item => item.uid === row.uid)
+
+    if (index === -1) {
+      this.selected.push(row)
+    }
+    else {
+      this.selected.splice(index, 1);
+    }
+  }
+
   containsByUid(uid: string) {
     return !!this.selected.find(item => item.uid === uid);
   }

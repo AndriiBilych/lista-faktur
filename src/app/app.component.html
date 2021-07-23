@@ -38,6 +38,6 @@
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="headerColumns; sticky: true"></tr>
-  <tr mat-row *matRowDef="let myRowData; columns: headerColumns"></tr>
+  <tr mat-row *matRowDef="let myRowData; columns: headerColumns" (click)="toggleRow(myRowData)"></tr>
 
 </table>
