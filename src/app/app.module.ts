@@ -11,10 +11,23 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatButtonModule} from "@angular/material/button";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { HoverElementsDirective } from './directives/hover-elements.directive';
+import {MatIconModule} from "@angular/material/icon";
+import { ControlPanelComponent } from './components/control-panel/control-panel.component';
+import { HeaderComponent } from './components/header/header.component';
+import { InputFormComponent } from './components/input-form/input-form.component';
+import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
+import { TableComponent } from './components/table/table.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HoverElementsDirective,
+    ControlPanelComponent,
+    HeaderComponent,
+    InputFormComponent,
+    ConfirmationModalComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,
@@ -27,6 +40,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatPaginatorModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,6 +3,7 @@ import {DataService} from "./services/data.service";
 import {InvoiceModel} from "./Models/invoice.model";
 import {Sort} from "@angular/material/sort";
 import {MatTable} from "@angular/material/table";
+import {TableStoreService} from "./services/table-store.service";
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,8 @@ export class AppComponent implements OnInit {
   @ViewChild('table') table: MatTable<InvoiceModel> | undefined;
 
   constructor(
-    private readonly dataService: DataService
+    private readonly dataService: DataService,
+    private readonly tableStoreService: TableStoreService,
   ) {
     this.invoices = [];
     this.selected = [];
@@ -32,6 +34,15 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.dataService.getInvoices().subscribe(data => {
       this.invoices = data;
+      this.tableStoreService.setTable(this.invoices);
+    });
+
+    this.tableStoreService.table$.subscribe(data => {
+      this.invoices = data
+
+      this.selected.filter(item => this.invoices.find(invoice => invoice.uid === item.uid));
+
+      this.table?.renderRows();
     });
   }
 
@@ -113,6 +124,8 @@ export class AppComponent implements OnInit {
         default: return 0;
       }
     });
+
+    this.tableStoreService.setTable(this.invoices);
   }
 }
 
