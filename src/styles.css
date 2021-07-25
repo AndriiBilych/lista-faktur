@@ -1,19 +1,9 @@
 @import "styles/directives.css";
 
 :root {
-  --background: #f4f4f4;
-  /*--highlight: #b5b5b5;*/
-  /*--header: #CFCDCD;*/
+  --background: #a8a7a7;
   --border: #b5b5b5;
-  /*--button: #f0f0f0;*/
-  /*--warning: red;*/
   --text: #848484;
-  /*--disabled: #c9c7c7;*/
-  /*--pathline: #270722;*/
-  /*--highlightedText: #ffffff;*/
-  /*--prototypeBackground: #d66;*/
-  /*--submit: #4e7820;*/
-  /*--submitHighlighted: #6aa72b;*/
 }
 
 html, body { height: 100%; }
@@ -24,9 +14,5 @@ svg {
   height: 20px;
 }
 
-button:hover {
-  color: red;
-  background-color: beige;
-}
 
 
