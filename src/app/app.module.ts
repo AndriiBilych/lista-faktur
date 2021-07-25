@@ -18,7 +18,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { InputFormComponent } from './components/input-form/input-form.component';
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 import { TableComponent } from './components/table/table.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -43,6 +43,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     MatCheckboxModule,
     MatIconModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
