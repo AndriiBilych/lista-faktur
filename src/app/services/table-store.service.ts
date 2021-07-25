@@ -6,18 +6,29 @@ import {InvoiceModel} from "../Models/invoice.model";
   providedIn: 'root'
 })
 export class TableStoreService {
-  private _tableSource = new ReplaySubject<InvoiceModel[]>();
-  table$ = this._tableSource.asObservable();
+  private _invoicesSource = new ReplaySubject<InvoiceModel[]>();
+  private _selectedSource = new ReplaySubject<InvoiceModel[]>();
+
+  invoices$ = this._invoicesSource.asObservable();
+  selected$ = this._selectedSource.asObservable();
 
   constructor() {
-    this.clearTable();
+    this.clearInvoices();
   }
 
-  setTable(data: InvoiceModel[]) {
-    this._tableSource.next(data);
+  setInvoices(data: InvoiceModel[]) {
+    this._invoicesSource.next(data);
   }
 
-  clearTable() {
-    this._tableSource.next([]);
+  setSelected(data: InvoiceModel[]) {
+    this._selectedSource.next(data);
+  }
+
+  clearInvoices() {
+    this._invoicesSource.next([]);
+  }
+
+  clearSelected() {
+    this._selectedSource.next([]);
   }
 }

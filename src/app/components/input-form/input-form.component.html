@@ -1,1 +1,55 @@
-<p>input-form works!</p>
+<div id="input-form-modal-container" class="background-container">
+  <div class="modal">
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+
+      <label>{{isEdit ? 'Edit row' : 'Add new row'}}</label>
+
+      <div class="input-container">
+        <input [formControlName]="'id'" type="number"
+               [class.error]="isSubmitted && formGroup.controls['id'].errors"
+               [placeholder]="'Invoice id'">
+        <label *ngIf="isSubmitted && formGroup.controls['id'].errors" class="label">Enter a number</label>
+      </div>
+      <div class="input-container">
+        <input [formControlName]="'contractor'" type="text"
+               [class.error]="isSubmitted && formGroup.controls['contractor'].errors"
+               [placeholder]="'Contractor'">
+        <label *ngIf="isSubmitted && formGroup.controls['contractor'].errors" class="label">Enter text</label>
+      </div>
+      <div class="input-container">
+        <input [formControlName]="'title'" type="text"
+               [class.error]="isSubmitted && formGroup.controls['title'].errors"
+               [placeholder]="'Title'">
+        <label *ngIf="isSubmitted && formGroup.controls['title'].errors" class="label">Enter text</label>
+      </div>
+      <div class="input-container">
+        <input [formControlName]="'comment'" type="text"
+               [class.error]="isSubmitted && formGroup.controls['comment'].errors"
+               [placeholder]="'Comment'">
+        <label *ngIf="isSubmitted && formGroup.controls['comment'].errors" class="label">Enter text</label>
+      </div>
+      <div class="input-container">
+        <input [formControlName]="'netto'" type="number"
+               [class.error]="isSubmitted && formGroup.controls['netto'].errors"
+               [placeholder]="'NETTO'">
+        <label *ngIf="isSubmitted && formGroup.controls['netto'].errors" class="label">Enter a number</label>
+      </div>
+      <div class="input-container">
+        <input [formControlName]="'vat'" type="number"
+               [class.error]="isSubmitted && formGroup.controls['vat'].errors"
+               [placeholder]="'VAT'">
+        <label *ngIf="isSubmitted && formGroup.controls['vat'].errors" class="label">Enter a number</label>
+      </div>
+      <div class="input-container">
+        <input [formControlName]="'date'" type="date"
+               [class.error]="isSubmitted && formGroup.controls['date'].errors"
+               [placeholder]="'date'">
+        <label *ngIf="isSubmitted && formGroup.controls['date'].errors" class="label">Enter a date</label>
+      </div>
+
+      <button mat-raised-button class="submit">
+        Submit
+      </button>
+    </form>
+  </div>
+</div>

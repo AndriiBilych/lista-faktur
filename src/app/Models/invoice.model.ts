@@ -3,7 +3,7 @@ import { v4 as uid} from "uuid";
 
 export class InvoiceModel implements InvoiceInterface{
   id: number;
-  uid: string
+  uid: string;
   contractor: string;
   title: string;
   comment: string;
@@ -12,19 +12,19 @@ export class InvoiceModel implements InvoiceInterface{
   order: number;
   date: string;
 
-  constructor() {
-    this.id = 0;
-    this.uid = uid();
-    this.contractor = 'New contractor';
-    this.title = 'New title';
-    this.comment = 'New comment';
-    this.netto = 0;
-    this.vat = 0;
-    this.order = 0;
+  constructor(id?: number, uniqueId?: string, contractor?: string, title?: string, comment?: string, netto?: number, vat?: number, order?: number, date?: string,) {
+    this.id = id ?? 0;
+    this.uid = uniqueId ?? uid();
+    this.contractor = contractor ?? 'New contractor';
+    this.title = title ?? 'New title';
+    this.comment = comment ?? 'New comment';
+    this.netto = netto ?? 0;
+    this.vat = vat ?? 0;
+    this.order = order ?? 0;
     const dateObj = new Date();
     const month = dateObj.getUTCMonth().toString();
     const day = dateObj.getDay().toString();
-    this.date = `${dateObj.getUTCFullYear()}-${month.length > 1 ? month : '0' + month}-${day.length > 1 ? day : '0' + day}`;
+    this.date = date ?? `${dateObj.getUTCFullYear()}-${month.length > 1 ? month : '0' + month}-${day.length > 1 ? day : '0' + day}`;
   }
 
   deserialize(invoice: InvoiceInterface) {

@@ -3,6 +3,7 @@ import {InvoiceModel} from "../Models/invoice.model";
 import {TableStoreService} from "../services/table-store.service";
 import {Subscription} from "rxjs";
 import { v4 as uid} from "uuid";
+import {ModalService} from "../services/modal.service";
 
 @Directive({
   selector: '[appHoverElements]'
@@ -17,6 +18,7 @@ export class HoverElementsDirective implements AfterViewInit {
   constructor(
     private el: ElementRef,
     private readonly tableStoreService: TableStoreService,
+    readonly modalService: ModalService,
   ) {
     this.rows = [];
     this.rowsData = [];
@@ -24,7 +26,7 @@ export class HoverElementsDirective implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.tableStoreService.table$.subscribe(data => {
+    this.tableStoreService.invoices$.subscribe(data => {
       if (data.length > 0) {
         this.rowsData = data;
         this.addHoverButtons();
@@ -67,7 +69,11 @@ export class HoverElementsDirective implements AfterViewInit {
 
     button.addEventListener('click', (event) => {
       event.stopPropagation();
-      console.log('opening modal');
+
+      const containers = Array.from(this.el.nativeElement.querySelectorAll('.hover-container'));
+      const index = containers.findIndex((item: any) => item.getAttribute('uid') === uid);
+
+      this.modalService.editModal(this.rowsData[index]);
     });
 
     return button;
@@ -85,7 +91,7 @@ export class HoverElementsDirective implements AfterViewInit {
       const index = containers.findIndex((item: any) => item.getAttribute('uid') === uid);
 
       this.rowsData.splice(index, 1);
-      this.tableStoreService.setTable(this.rowsData);
+      this.tableStoreService.setInvoices(this.rowsData);
     });
 
     return button;
