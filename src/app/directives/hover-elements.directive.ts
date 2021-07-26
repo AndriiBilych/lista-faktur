@@ -72,6 +72,7 @@ export class HoverElementsDirective implements AfterViewInit {
       const containers = Array.from(this.el.nativeElement.querySelectorAll('.hover-container'));
       const index = containers.findIndex((item: any) => item.getAttribute('uid') === uid);
       const newInvoice = Object.assign({}, this.rowsData[index]);
+      newInvoice.id = this.findNewId();
 
       this.rowsData.splice(index + 1, 0, newInvoice);
       this.tableStoreService.setInvoices(this.rowsData);
@@ -115,5 +116,15 @@ export class HoverElementsDirective implements AfterViewInit {
     });
 
     return button;
+  }
+
+  findNewId(): number {
+    for (let i = 0; i < this.rowsData.length; i++) {
+      if (this.rowsData.findIndex(item => item.id === i) < 0) {
+        return i;
+      }
+    }
+
+    return this.rowsData.length;
   }
 }
