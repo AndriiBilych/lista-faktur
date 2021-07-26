@@ -8,6 +8,7 @@ import {InvoiceModel} from "../Models/invoice.model";
 export class ModalService {
   private _modalValue = new ReplaySubject<InvoiceModel>();
   private _isEdit = new ReplaySubject<boolean>();
+
   isEdit$ = this._isEdit.asObservable();
   modalValue$ = this._modalValue.asObservable();
 

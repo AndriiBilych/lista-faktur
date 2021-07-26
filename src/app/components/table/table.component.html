@@ -4,38 +4,41 @@
   <svg aria-hidden="true" *ngIf="input.value.length > 0" (click)="clearFilter($event)" focusable="false" data-prefix="fas" data-icon="times-circle" class="icon svg-inline--fa fa-times-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"></path></svg>
 </mat-form-field>
 
-<app-control-panel></app-control-panel>
+<div class="table">
+  <app-control-panel></app-control-panel>
 
-<table #table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="invoices" appHoverElements>
+  <table #table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="invoices" appHoverElements>
 
-  <ng-container matColumnDef="select">
-    <th mat-header-cell *matHeaderCellDef>
-      <mat-checkbox (change)="masterToggle($event)"
-                    [checked]="selected.length > 0 && selected.length === invoices.length"
-                    [indeterminate]="selected.length > 0 && selected.length !== invoices.length">
-      </mat-checkbox>
-    </th>
-    <td mat-cell *matCellDef="let row">
-      <mat-checkbox (click)="$event.stopPropagation()"
-                    (change)="toggle($event, row)"
-                    [checked]="containsByUid(row.uid)">
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="masterToggle($event)"
+                      [checked]="selected.length > 0 && selected.length === invoices.length"
+                      [indeterminate]="selected.length > 0 && selected.length !== invoices.length">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="toggle($event, row)"
+                      [checked]="containsByUid(row.uid)">
 
-      </mat-checkbox>
-    </td>
-  </ng-container>
+        </mat-checkbox>
+      </td>
+    </ng-container>
 
-  <ng-container *ngFor="let column of dataColumns; index as i" matColumnDef="{{column}}">
+    <ng-container *ngFor="let column of dataColumns; index as i" matColumnDef="{{column}}">
 
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column }} </th>
-    <td mat-cell *matCellDef="let row"> {{row[column]}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column }} </th>
+      <td mat-cell *matCellDef="let row"> {{row[column]}} </td>
 
-  </ng-container>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="headerColumns; sticky: true"></tr>
-  <tr mat-row *matRowDef="let myRowData; columns: headerColumns" (click)="toggleRow(myRowData)"></tr>
+    <tr mat-header-row *matHeaderRowDef="headerColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: headerColumns" (click)="toggleRow(myRowData)"></tr>
 
-</table>
+  </table>
 
-<button mat-flat-button (click)="modalService.createModal()" class="add-row-button">
-  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg>
-</button>
+  <button (click)="modalService.createModal()" class="add-row-button">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg>
+  </button>
+</div>
+

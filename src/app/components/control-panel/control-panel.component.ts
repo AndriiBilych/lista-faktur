@@ -6,12 +6,13 @@ import {ModalService} from "../../services/modal.service";
 @Component({
   selector: 'app-control-panel',
   templateUrl: './control-panel.component.html',
-  styleUrls: ['./control-panel.component.css']
+  styleUrls: ['./control-panel.component.scss']
 })
 export class ControlPanelComponent implements OnInit {
 
   invoices: InvoiceModel[];
   selected: InvoiceModel[];
+  isModalOpened: boolean = false;
 
   constructor(
     private readonly tableStoreService: TableStoreService,

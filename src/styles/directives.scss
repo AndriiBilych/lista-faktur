@@ -1,0 +1,28 @@
+.hover-container {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: white;
+  margin: 5px;
+  padding: 5px 10px;
+}
+
+button {
+  border: none;
+  color: #848484;
+  box-shadow: none;
+  border-radius: 5px;
+  padding: 3px;
+  background: none;
+  margin-right: 5px
+}
+
+button:hover:enabled {
+  background-color: #cdcdcd;
+}
+
+tr:hover .hover-container {
+  visibility: visible;
+}
+

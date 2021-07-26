@@ -2,7 +2,7 @@
   <div class="modal">
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
 
-      <label>{{isEdit ? 'Edit row' : 'Add new row'}}</label>
+      <label class="header">{{isEdit ? 'Edit row' : 'Add new row'}}</label>
 
       <div class="input-container">
         <input [formControlName]="'id'" type="number"
