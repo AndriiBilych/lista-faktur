@@ -30,6 +30,7 @@ export class HoverElementsDirective implements AfterViewInit {
       if (data.length > 0) {
         this.rowsData = data;
         this.addHoverButtons();
+        this.hoverAdded = false;
       }
     });
 
@@ -39,10 +40,6 @@ export class HoverElementsDirective implements AfterViewInit {
         this.hoverAdded = true;
       }
     });
-
-    document.querySelectorAll('.add-row-button')?.forEach(el => {
-      el.addEventListener('click', () => this.addHoverButtons());
-    })
   }
 
   addHoverButtons() {
@@ -74,8 +71,9 @@ export class HoverElementsDirective implements AfterViewInit {
 
       const containers = Array.from(this.el.nativeElement.querySelectorAll('.hover-container'));
       const index = containers.findIndex((item: any) => item.getAttribute('uid') === uid);
+      const newInvoice = Object.assign({}, this.rowsData[index]);
 
-      this.rowsData.splice(index, 0, this.rowsData[index]);
+      this.rowsData.splice(index + 1, 0, newInvoice);
       this.tableStoreService.setInvoices(this.rowsData);
     });
 

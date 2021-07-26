@@ -76,7 +76,6 @@ export class TableComponent implements OnInit {
         return RegExp(filterValue.toLowerCase()).test(subject)
       });
 
-      // this.tableStoreService.setInvoices(this.invoices);
     }
     else {
       if (this.isTableSaved) {
