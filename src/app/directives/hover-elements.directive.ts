@@ -60,7 +60,7 @@ export class HoverElementsDirective implements AfterViewInit {
     });
   }
 
-  createDuplicateButton(uid: string): HTMLElement {
+  createDuplicateButton(uniqueId: string): HTMLElement {
     const button = document.createElement('button');
     button.setAttribute('class', 'duplicate-hover-button');
     button.setAttribute('title', 'Duplicate this row');
@@ -70,9 +70,10 @@ export class HoverElementsDirective implements AfterViewInit {
       event.stopPropagation();
 
       const containers = Array.from(this.el.nativeElement.querySelectorAll('.hover-container'));
-      const index = containers.findIndex((item: any) => item.getAttribute('uid') === uid);
+      const index = containers.findIndex((item: any) => item.getAttribute('uid') === uniqueId);
       const newInvoice = Object.assign({}, this.rowsData[index]);
       newInvoice.id = this.findNewId();
+      newInvoice.uid = uid();
 
       this.rowsData.splice(index + 1, 0, newInvoice);
       this.tableStoreService.setInvoices(this.rowsData);
