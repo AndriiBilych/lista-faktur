@@ -19,6 +19,7 @@ import { InputFormComponent } from './components/input-form/input-form.component
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 import { TableComponent } from './components/table/table.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { ShortenerPipe } from './pipes/shortener.pipe';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     InputFormComponent,
     ConfirmationModalComponent,
     TableComponent,
+    ShortenerPipe,
   ],
   imports: [
     BrowserModule,
