@@ -31,7 +31,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
     this.invoices = [];
     this.invoice = new InvoiceModel();
     this.formGroup = this.fb.group({
-      id: new FormControl('', Validators.required),
+      id: new FormControl({disabled: true}),
       contractor: new FormControl('', Validators.required),
       title: new FormControl('', Validators.required),
       comment: new FormControl('', Validators.required),
@@ -59,7 +59,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
       }
       else {
         this.formGroup = this.fb.group({
-          id: new FormControl('', Validators.required),
+          id: new FormControl({value: this.invoice.id, disabled: true}),
           contractor: new FormControl('', Validators.required),
           title: new FormControl('', Validators.required),
           comment: new FormControl('', Validators.required),
@@ -85,7 +85,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const newInvoice = new InvoiceModel(
-      this.formGroup.value.id,
+      this.invoice.id,
       this.invoice.uid,
       this.formGroup.value.contractor,
       this.formGroup.value.title,

@@ -161,6 +161,20 @@ export class TableComponent implements OnInit {
       (document.getElementById('filter') as HTMLInputElement).value = '';
     }
   }
+
+  createModal() {
+    this.modalService.createModal(this.findNewId());
+  }
+
+  findNewId(): number {
+    for (let i = 0; i < this.invoices.length; i++) {
+      if (this.invoices.findIndex(item => item.id === i) < 0) {
+        return i;
+      }
+    }
+
+    return this.invoices.length;
+  }
 }
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {

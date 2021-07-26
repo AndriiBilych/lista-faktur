@@ -17,8 +17,8 @@ export class ModalService {
     this._isEdit.next(false);
   }
 
-  createModal() {
-    this._modalValue.next(new InvoiceModel());
+  createModal(id: number) {
+    this._modalValue.next(new InvoiceModel(id));
     this._isEdit.next(false);
   }
 

@@ -46,4 +46,18 @@ export class ControlPanelComponent implements OnInit {
       this.tableStoreService.clearSelected();
     }
   }
+
+  createModal() {
+    this.modalService.createModal(this.findNewId());
+  }
+
+  findNewId(): number {
+    for (let i = 0; i < this.invoices.length; i++) {
+      if (this.invoices.findIndex(item => item.id === i) < 0) {
+        return i;
+      }
+    }
+
+    return this.invoices.length;
+  }
 }
