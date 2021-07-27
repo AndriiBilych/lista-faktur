@@ -64,3 +64,11 @@ button {
 button:hover:enabled {
   background-color: #eceaea;
 }
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 20px;
+  font-weight: 600;
+}

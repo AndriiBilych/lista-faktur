@@ -8,7 +8,6 @@
   <app-control-panel
     [invoices]="invoices"
     [selectedInvoices]="selectedInvoices"
-    [isInvoices]="true"
     (newInvoices)="setInvoices($event)"
     (newSelectedInvoices)="setSelectedInvoices($event)"
     (openModalAction)="isEditingInputForm = false; isInputFormOpen = true"

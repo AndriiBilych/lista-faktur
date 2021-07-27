@@ -1,0 +1,37 @@
+<div id="input-form-modal-container" class="background-container">
+  <div class="modal">
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+
+      <label class="header">{{isEdit ? 'Edit row' : 'Add new row'}}</label>
+
+      <div class="input-container">
+        <input [formControlName]="'id'" type="number"
+               [class.error]="isSubmitted && formGroup.controls['id'].errors"
+               [placeholder]="'Item id'">
+        <label *ngIf="isSubmitted && formGroup.controls['id'].errors" class="label">Enter a number</label>
+      </div>
+      <div class="input-container">
+        <input [formControlName]="'description'" type="text"
+               [class.error]="isSubmitted && formGroup.controls['description'].errors"
+               [placeholder]="'Description'">
+        <label *ngIf="isSubmitted && formGroup.controls['description'].errors" class="label">Enter text</label>
+      </div>
+      <div class="input-container">
+        <input [formControlName]="'netto'" type="number"
+               [class.error]="isSubmitted && formGroup.controls['netto'].errors"
+               [placeholder]="'NETTO'">
+        <label *ngIf="isSubmitted && formGroup.controls['netto'].errors" class="label">Enter number</label>
+      </div>
+      <div class="input-container">
+        <input [formControlName]="'vat'" type="number"
+               [class.error]="isSubmitted && formGroup.controls['vat'].errors"
+               [placeholder]="'VAT'">
+        <label *ngIf="isSubmitted && formGroup.controls['vat'].errors" class="label">Enter number</label>
+      </div>
+
+      <button mat-raised-button class="submit">
+        Submit
+      </button>
+    </form>
+  </div>
+</div>

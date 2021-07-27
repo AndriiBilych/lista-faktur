@@ -1,0 +1,17 @@
+button {
+  border: none;
+  color: #848484;
+  box-shadow: none;
+  border-radius: 5px;
+  padding: 10px 12px;
+  background: none;
+  margin-left: 10px
+}
+
+button:hover:enabled {
+  background-color: #eceaea;
+}
+
+button:disabled {
+  color: #d0cfcf;
+}

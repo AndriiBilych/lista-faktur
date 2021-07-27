@@ -10,7 +10,7 @@ import {Subscription} from "rxjs";
   templateUrl: './input-form.component.html',
   styleUrls: ['./input-form.component.scss']
 })
-export class InputFormComponent implements OnInit, OnDestroy {
+export class InputFormComponent implements OnInit {
 
   @Input() isEdit: boolean = false;
   @Input() newId: number = 0;
@@ -59,15 +59,10 @@ export class InputFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
   @HostListener('document:click', ['$event.target'])
   clicked(eventTarget: HTMLElement) {
     if (eventTarget.id === 'input-form-modal-container') {
       this.closeAction.emit();
-      this.subscription.unsubscribe();
     }
   }
 
@@ -87,7 +82,6 @@ export class InputFormComponent implements OnInit, OnDestroy {
     if (this.formGroup.valid) {
       this.submitAction.emit(newInvoice);
       this.closeAction.emit();
-      this.subscription.unsubscribe();
     }
   }
 }

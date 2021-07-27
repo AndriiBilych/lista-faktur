@@ -21,6 +21,9 @@ import { TableComponent } from './components/table/table.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ShortenerPipe } from './pipes/shortener.pipe';
 import { ItemsTableComponent } from './components/items-table/items-table.component';
+import { ItemsControlPanelComponent } from './components/items-control-panel/items-control-panel.component';
+import { ItemsHoverToolsDirective } from './directives/items-hover-tools.directive';
+import { ItemsInputFormComponent } from './components/items-input-form/items-input-form.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,9 @@ import { ItemsTableComponent } from './components/items-table/items-table.compon
     TableComponent,
     ShortenerPipe,
     ItemsTableComponent,
+    ItemsControlPanelComponent,
+    ItemsHoverToolsDirective,
+    ItemsInputFormComponent,
   ],
   imports: [
     BrowserModule,

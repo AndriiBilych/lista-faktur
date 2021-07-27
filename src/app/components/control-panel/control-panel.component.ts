@@ -13,44 +13,24 @@ export class ControlPanelComponent implements OnInit {
 
   // TODO: [research] This duplication needs to be solved with generics or correct emitting of multiple data types
   @Input() invoices: InvoiceModel[];
-  @Input() items: ItemModel[];
   @Input() selectedInvoices: InvoiceModel[];
-  @Input() selectedItems: ItemModel[];
-  @Input() isInvoices: boolean = true; // true - invoices, false - items
 
   @Output() newInvoices = new EventEmitter<InvoiceModel[]>();
-  @Output() newItems = new EventEmitter<ItemModel[]>();
   @Output() newSelectedInvoices = new EventEmitter<InvoiceModel[]>();
-  @Output() newSelectedItems = new EventEmitter<ItemModel[]>();
   @Output() openModalAction = new EventEmitter();
   isModalOpened: boolean = false;
 
-  constructor(
-    // private readonly tableStoreService: TableStoreService,
-    readonly modalService: ModalService,
-  ) {
+  constructor() {
     this.invoices = [];
-    this.items = [];
     this.selectedInvoices = [];
-    this.selectedItems = [];
   }
 
-  ngOnInit(): void {
-    // this.tableStoreService.invoices$.subscribe(data => {
-    //   this.invoices = data
-
-      // this.selected.filter(item => this.invoices.find(invoice => invoice.uid === item.uid));
-    // });
-
-    // this.tableStoreService.selected$.subscribe(data => this.selected = data);
-  }
+  ngOnInit(): void {}
 
   removeData() {
     if (this.selectedInvoices.length === this.invoices.length) {
       this.newInvoices.emit([]);
-      // this.invoices = [];
       this.newSelectedInvoices.emit([]);
-      // this.selectedInvoices = [];
     }
     else {
       for (const select of this.selectedInvoices) {
@@ -59,18 +39,7 @@ export class ControlPanelComponent implements OnInit {
       }
       this.newInvoices.emit(this.invoices);
       this.newSelectedInvoices.emit([]);
-      // this.selectedInvoices = [];
-      // this.tableStoreService.setInvoices(this.invoices);
-      // this.tableStoreService.clearSelected();
     }
-    // console.log(this.data, this.selectedData)
-  }
-
-  createModal() {
-    this.openModalAction.emit();
-    // if (this.isInvoices) {
-    //   this.modalService.createModal(this.findNewId());
-    // }
   }
 
   findNewId(): number {
