@@ -5,16 +5,28 @@
 </mat-form-field>
 
 <div class="table">
-  <app-control-panel></app-control-panel>
+  <app-control-panel
+    [invoices]="invoices"
+    [selectedInvoices]="selectedInvoices"
+    [isInvoices]="true"
+    (newInvoices)="setInvoices($event)"
+    (newSelectedInvoices)="setSelectedInvoices($event)"
+    (openModalAction)="isEditingInputForm = false; isInputFormOpen = true"
+  ></app-control-panel>
 
-  <table #table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="invoices" appHoverElements>
+  <table #table mat-table matSort (matSortChange)="sortInvoices($event)" [dataSource]="invoices"
+         invoicesHoverTools
+         [invoices]="invoicesHolder.length > 0 ? invoicesHolder : invoices"
+         (duplicateAction)="duplicateInvoice($event)"
+         (editAction)="newInvoice = $event; isEditingInputForm = true; isInputFormOpen = true"
+         (removeAction)="removeInvoice($event)">
 
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
         <mat-checkbox (change)="masterToggle($event)"
-                      [checked]="selected.length > 0 && selected.length === invoices.length"
+                      [checked]="selectedInvoices.length > 0 && selectedInvoices.length === invoices.length"
                       title="Select/Deselect all"
-                      [indeterminate]="selected.length > 0 && selected.length !== invoices.length">
+                      [indeterminate]="selectedInvoices.length > 0 && selectedInvoices.length !== invoices.length">
         </mat-checkbox>
       </th>
       <td mat-cell *matCellDef="let row">
@@ -35,12 +47,24 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="headerColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let myRowData; columns: headerColumns" (click)="toggleRow(myRowData)"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: headerColumns" (click)="itemsInvoice = myRowData"></tr>
 
   </table>
 
-  <button (click)="createModal()" class="add-row-button" title="Add new row">
+  <button (click)="isEditingInputForm = false; isInputFormOpen = true" class="add-row-button" title="Add new row">
     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg>
   </button>
 </div>
 
+<div class="modal-container" *ngIf="itemsInvoice">
+  <div class="modal">
+    <app-items-table [invoice]="itemsInvoice" (closeAction)="itemsInvoice = null"></app-items-table>
+  </div>
+</div>
+
+<app-input-form *ngIf="isInputFormOpen"
+                [newId]="findNewId()"
+                [invoice]="newInvoice"
+                [isEdit]="isEditingInputForm"
+                (closeAction)="isInputFormOpen = false"
+                (submitAction)="isEditingInputForm ? modifyInvoice($event) : addInvoice($event)"></app-input-form>

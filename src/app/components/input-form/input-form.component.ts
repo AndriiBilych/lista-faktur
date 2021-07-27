@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, Output, EventEmitter, Input} from '@angular/core';
 import {ModalService} from "../../services/modal.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {InvoiceModel} from "../../Models/invoice.model";
@@ -12,63 +12,51 @@ import {Subscription} from "rxjs";
 })
 export class InputFormComponent implements OnInit, OnDestroy {
 
+  @Input() isEdit: boolean = false;
+  @Input() newId: number = 0;
+  @Input() invoice: InvoiceModel;
+
   @Output() closeAction = new EventEmitter();
+  @Output() submitAction = new EventEmitter();
 
   formGroup: FormGroup;
-  invoice: InvoiceModel;
-  invoices: InvoiceModel[];
 
   subscription: Subscription;
-  isEdit: boolean = false;
   isSubmitted: boolean = false;
 
   constructor(
-    readonly tableStoreService: TableStoreService,
-    readonly modalService: ModalService,
     private readonly fb: FormBuilder,
   ) {
     this.subscription = new Subscription();
-    this.invoices = [];
     this.invoice = new InvoiceModel();
     this.formGroup = this.fb.group({
-      id: new FormControl({disabled: true}),
+      id: new FormControl({value: '', disabled: true}),
       contractor: new FormControl('', Validators.required),
       title: new FormControl('', Validators.required),
       comment: new FormControl('', Validators.required),
-      netto: new FormControl('', Validators.required),
-      vat: new FormControl('', Validators.required),
       date: new FormControl('', Validators.required),
     })
   }
 
   ngOnInit(): void {
-    this.subscription.add(this.tableStoreService.invoices$.subscribe(data => this.invoices = data));
-    this.subscription.add(this.modalService.modalValue$.subscribe(value => this.invoice = value));
-    this.subscription.add(this.modalService.isEdit$.subscribe(value => {
-      this.isEdit = value;
-      if (this.isEdit) {
-        this.formGroup.setValue({
-          id: this.invoice.id,
-          contractor: this.invoice.contractor,
-          title: this.invoice.title,
-          comment: this.invoice.comment,
-          netto: this.invoice.netto,
-          vat: this.invoice.vat,
-          date: this.invoice.date,
-        });
-      }
-      else {
-        this.formGroup = this.fb.group({
-          id: new FormControl({value: this.invoice.id, disabled: true}),
-          contractor: new FormControl('', Validators.required),
-          title: new FormControl('', Validators.required),
-          comment: new FormControl('', Validators.required),
-          netto: new FormControl('', Validators.required),
-          vat: new FormControl('', Validators.required),
-          date: new FormControl('', Validators.required),
-        })
-      }
-    }));
+    if (this.isEdit) {
+      this.formGroup.setValue({
+        id: this.invoice.id,
+        contractor: this.invoice.contractor,
+        title: this.invoice.title,
+        comment: this.invoice.comment,
+        date: this.invoice.date,
+      });
+    }
+    else {
+      this.formGroup.setValue({
+        id: this.newId,
+        contractor: '',
+        title: '',
+        comment: '',
+        date: '',
+      })
+    }
   }
 
   ngOnDestroy() {
@@ -85,14 +73,11 @@ export class InputFormComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const newInvoice = new InvoiceModel(
-      this.invoice.id,
+      this.isEdit ? this.invoice.id : this.newId,
       this.invoice.uid,
       this.formGroup.value.contractor,
       this.formGroup.value.title,
       this.formGroup.value.comment,
-      this.formGroup.value.netto,
-      this.formGroup.value.vat,
-      this.invoice.order,
       this.formGroup.value.date.toString(),
     );
 
@@ -100,14 +85,7 @@ export class InputFormComponent implements OnInit, OnDestroy {
     this.formGroup.updateValueAndValidity();
 
     if (this.formGroup.valid) {
-      if (!this.isEdit) {
-        this.invoices.push(newInvoice);
-      }
-      else {
-        const index = this.invoices.findIndex(item => item.uid === this.invoice.uid);
-        this.invoices[index] = newInvoice;
-      }
-      this.tableStoreService.setInvoices(this.invoices);
+      this.submitAction.emit(newInvoice);
       this.closeAction.emit();
       this.subscription.unsubscribe();
     }

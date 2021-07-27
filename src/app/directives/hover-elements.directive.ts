@@ -1,63 +1,42 @@
-import {AfterViewInit, Directive, ElementRef} from '@angular/core';
+import {AfterViewInit, Directive, ElementRef, Input, Output, EventEmitter} from '@angular/core';
 import {InvoiceModel} from "../Models/invoice.model";
-import {TableStoreService} from "../services/table-store.service";
-import {Subscription} from "rxjs";
 import { v4 as uid} from "uuid";
-import {ModalService} from "../services/modal.service";
 
 @Directive({
-  selector: '[appHoverElements]'
+  selector: '[invoicesHoverTools]'
 })
 export class HoverElementsDirective implements AfterViewInit {
 
-  rows: HTMLElement[];
-  rowsData: InvoiceModel[];
-  hoverAdded: boolean = false;
-  subscription: Subscription;
+  @Input() invoices: InvoiceModel[];
+  @Output() duplicateAction = new EventEmitter<InvoiceModel>();
+  @Output() editAction = new EventEmitter<InvoiceModel>();
+  @Output() removeAction = new EventEmitter<InvoiceModel>();
 
   constructor(
     private el: ElementRef,
-    private readonly tableStoreService: TableStoreService,
-    readonly modalService: ModalService,
   ) {
-    this.rows = [];
-    this.rowsData = [];
-    this.subscription = new Subscription();
+    this.invoices = [];
   }
 
   ngAfterViewInit() {
-    this.tableStoreService.invoices$.subscribe(data => {
-      if (data.length > 0) {
-        this.rowsData = data;
-        this.addHoverButtons();
-        this.hoverAdded = false;
+    setInterval(() => {
+      const elems = this.el.nativeElement.querySelectorAll('.hover-container');
+      if (this.invoices.length !== elems.length) {
+        const rows = this.el.nativeElement.querySelectorAll('.mat-row');
+        rows.forEach((el: any) => {
+          if (!el.querySelector('.hover-container')) {
+            const container = document.createElement('div');
+            container.setAttribute('class', 'hover-container');
+            const uniqueId = uid();
+            container.setAttribute('uid', uniqueId);
+            container.appendChild(this.createDuplicateButton(uniqueId));
+            container.appendChild(this.createEditButton(uniqueId));
+            container.appendChild(this.createRemoveButton(uniqueId));
+            el.appendChild(container);
+          }
+        });
       }
-    });
-
-    this.el.nativeElement.addEventListener('mousemove', () => {
-      if (!this.hoverAdded) {
-        this.addHoverButtons();
-        this.hoverAdded = true;
-      }
-    });
-  }
-
-  addHoverButtons() {
-    this.rows = [];
-    this.rows = this.el.nativeElement.querySelectorAll('.mat-row');
-
-    this.rows.forEach((el, index) => {
-      if (!el.querySelector('.hover-container')) {
-        const container = document.createElement('div');
-        container.setAttribute('class', 'hover-container');
-        const uniqueId = uid();
-        container.setAttribute('uid', uniqueId);
-        container.appendChild(this.createDuplicateButton(uniqueId));
-        container.appendChild(this.createEditButton(uniqueId));
-        container.appendChild(this.createRemoveButton(uniqueId));
-        el.appendChild(container);
-      }
-    });
+    }, 750);
   }
 
   createDuplicateButton(uniqueId: string): HTMLElement {
@@ -71,12 +50,9 @@ export class HoverElementsDirective implements AfterViewInit {
 
       const containers = Array.from(this.el.nativeElement.querySelectorAll('.hover-container'));
       const index = containers.findIndex((item: any) => item.getAttribute('uid') === uniqueId);
-      const newInvoice = Object.assign({}, this.rowsData[index]);
-      newInvoice.id = this.findNewId();
-      newInvoice.uid = uid();
+      const newInvoice = Object.assign({}, this.invoices[index]);
 
-      this.rowsData.splice(index + 1, 0, newInvoice);
-      this.tableStoreService.setInvoices(this.rowsData);
+      this.duplicateAction.emit(newInvoice);
     });
 
     return button;
@@ -94,7 +70,7 @@ export class HoverElementsDirective implements AfterViewInit {
       const containers = Array.from(this.el.nativeElement.querySelectorAll('.hover-container'));
       const index = containers.findIndex((item: any) => item.getAttribute('uid') === uid);
 
-      this.modalService.editModal(this.rowsData[index]);
+      this.editAction.emit(this.invoices[index]);
     });
 
     return button;
@@ -112,20 +88,19 @@ export class HoverElementsDirective implements AfterViewInit {
       const containers = Array.from(this.el.nativeElement.querySelectorAll('.hover-container'));
       const index = containers.findIndex((item: any) => item.getAttribute('uid') === uid);
 
-      this.rowsData.splice(index, 1);
-      this.tableStoreService.setInvoices(this.rowsData);
+      this.removeAction.emit(this.invoices[index]);
     });
 
     return button;
   }
 
   findNewId(): number {
-    for (let i = 0; i < this.rowsData.length; i++) {
-      if (this.rowsData.findIndex(item => item.id === i) < 0) {
+    for (let i = 0; i < this.invoices.length; i++) {
+      if (this.invoices.findIndex(item => item.id === i) < 0) {
         return i;
       }
     }
 
-    return this.rowsData.length;
+    return this.invoices.length;
   }
 }

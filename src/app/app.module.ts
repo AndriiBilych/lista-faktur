@@ -20,6 +20,7 @@ import { ConfirmationModalComponent } from './components/confirmation-modal/conf
 import { TableComponent } from './components/table/table.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ShortenerPipe } from './pipes/shortener.pipe';
+import { ItemsTableComponent } from './components/items-table/items-table.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ShortenerPipe } from './pipes/shortener.pipe';
     ConfirmationModalComponent,
     TableComponent,
     ShortenerPipe,
+    ItemsTableComponent,
   ],
   imports: [
     BrowserModule,

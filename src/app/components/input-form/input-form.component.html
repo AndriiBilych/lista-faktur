@@ -29,18 +29,6 @@
         <label *ngIf="isSubmitted && formGroup.controls['comment'].errors" class="label">Enter text</label>
       </div>
       <div class="input-container">
-        <input [formControlName]="'netto'" type="number"
-               [class.error]="isSubmitted && formGroup.controls['netto'].errors"
-               [placeholder]="'NETTO'">
-        <label *ngIf="isSubmitted && formGroup.controls['netto'].errors" class="label">Enter a number</label>
-      </div>
-      <div class="input-container">
-        <input [formControlName]="'vat'" type="number"
-               [class.error]="isSubmitted && formGroup.controls['vat'].errors"
-               [placeholder]="'VAT'">
-        <label *ngIf="isSubmitted && formGroup.controls['vat'].errors" class="label">Enter a number</label>
-      </div>
-      <div class="input-container">
         <input [formControlName]="'date'" type="date"
                [class.error]="isSubmitted && formGroup.controls['date'].errors"
                [placeholder]="'date'">
